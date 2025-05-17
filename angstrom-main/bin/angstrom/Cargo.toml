@@ -1,0 +1,84 @@
+[package]
+name = "angstrom"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = """
+Angstrom Sidecar implementation
+"""
+
+[package.metadata.cargo-udeps.ignore]
+normal = [
+  # Used for diagrams in docs
+  "aquamarine",
+]
+
+[dependencies]
+# Alloy
+alloy-chains.workspace = true
+alloy-rpc-types.workspace = true
+alloy-primitives.workspace = true
+alloy.workspace = true
+
+
+# Reth
+reth.workspace = true
+reth-cli-util.workspace = true
+reth-metrics.workspace = true
+reth-network.workspace = true
+reth-network-peers.workspace = true
+reth-node-builder.workspace = true
+reth-node-ethereum.workspace = true
+reth-provider.workspace = true
+
+# Angstrom components
+angstrom-rpc.workspace = true
+angstrom-types.workspace = true
+angstrom-eth.workspace = true
+angstrom-metrics.workspace = true
+order-pool.workspace = true
+matching-engine.workspace = true
+angstrom-network.workspace = true
+validation.workspace = true
+consensus.workspace = true
+uniswap-v4.workspace = true
+
+# Other things
+tokio.workspace = true
+tokio-util.workspace = true
+serde.workspace = true
+secp256k1 = { workspace = true, features = ["serde"] }
+clap.workspace = true
+eyre.workspace = true
+toml.workspace = true
+revm-interpreter.workspace = true
+tracing.workspace = true
+url.workspace = true
+futures.workspace = true
+rayon = "1"
+parking_lot.workspace = true
+
+[target.'cfg(unix)'.dependencies]
+tikv-jemallocator = { version = "0.6.0", optional = true }
+
+
+[features]
+default = ["jemalloc"]
+jemalloc = ["dep:tikv-jemallocator"]
+jemalloc-prof = ["jemalloc", "tikv-jemallocator?/profiling"]
+testnet-sepolia = [
+  "angstrom-types/testnet-sepolia",
+  "angstrom-rpc/testnet-sepolia",
+  "angstrom-eth/testnet-sepolia",
+  "validation/testnet-sepolia",
+  "consensus/testnet-sepolia",
+  "uniswap-v4/testnet-sepolia",
+]
+
+
+[[bin]]
+name = "angstrom"
+path = "src/main.rs"

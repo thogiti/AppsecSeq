@@ -1,0 +1,58 @@
+[package]
+name = "consensus"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+exclude.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# angstrom
+angstrom-metrics.workspace = true
+uniswap-v4.workspace = true
+
+bitmaps.workspace = true
+tokio.workspace = true
+futures.workspace = true
+thiserror.workspace = true
+reth-primitives.workspace = true
+alloy.workspace = true
+reth-metrics.workspace = true
+reth-provider.workspace = true
+tracing.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+anyhow.workspace = true
+url.workspace = true
+serde_json.workspace = true
+hex-literal.workspace = true
+rayon.workspace = true
+alloy-rlp.workspace = true
+reth-tasks.workspace = true
+secp256k1.workspace = true
+itertools.workspace = true
+rand.workspace = true
+
+angstrom-types.workspace = true
+angstrom-utils.workspace = true
+angstrom-network.workspace = true
+order-pool.workspace = true
+matching-engine.workspace = true
+validation.workspace = true
+tokio-stream.workspace = true
+eyre.workspace = true
+pade.workspace = true
+
+[dev-dependencies]
+dashmap.workspace = true
+testing-tools.workspace = true
+tracing.workspace = true
+tracing-appender.workspace = true
+tracing-subscriber.workspace = true
+
+[features]
+testnet-sepolia = ["angstrom-types/testnet-sepolia"]

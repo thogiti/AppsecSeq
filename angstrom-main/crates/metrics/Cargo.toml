@@ -1,0 +1,47 @@
+[package]
+name = "angstrom-metrics"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+exclude.workspace = true
+
+[dependencies]
+
+# angstrom
+angstrom-types.workspace = true
+
+# async
+tokio = { workspace = true, features = ["full", "tracing"] }
+futures.workspace = true
+
+# tracing
+tracing.workspace = true
+tracing-subscriber.workspace = true
+alloy-primitives.workspace = true
+reth-primitives.workspace = true
+
+# metrics
+metrics-exporter-prometheus = "=0.12.1"
+metrics-util = "0.15.0"
+metrics-process = "1"
+metrics.workspace = true
+prometheus = "0"
+
+# errors
+eyre.workspace = true
+
+# misc
+hyper = "0.14"
+dashmap.workspace = true
+
+[target.'cfg(unix)'.dependencies]
+tikv-jemalloc-ctl = { version = "0.6.0", optional = true }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+procfs = "0.16.0"
+
+[features]
+jemalloc = ["dep:tikv-jemalloc-ctl"]

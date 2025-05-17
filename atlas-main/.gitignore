@@ -1,0 +1,15 @@
+/cache
+/node_modules
+/broadcast
+/out
+/report
+/lib
+lib
+/lib/*
+/lib/uniswap
+/lib/uniswap/*
+.env
+.DS_Store
+/broadcast
+lcov.info
+lcov_filtered.info

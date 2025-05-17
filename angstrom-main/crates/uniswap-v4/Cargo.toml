@@ -1,0 +1,67 @@
+[package]
+name = "uniswap-v4"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+exclude.workspace = true
+
+
+[dependencies]
+serde.workspace = true
+dashmap.workspace = true
+angstrom-types.workspace = true
+angstrom-eth.workspace = true
+angstrom-utils.workspace = true
+alloy.workspace = true
+alloy-primitives.workspace = true
+eyre.workspace = true
+futures.workspace = true
+futures-util.workspace = true
+uniswap_v3_math.workspace = true
+itertools.workspace = true
+malachite.workspace = true
+malachite-q.workspace = true
+pade.workspace = true
+pade-macro.workspace = true
+rand.workspace = true
+rand_distr.workspace = true
+tokio.workspace = true
+reth-tasks.workspace = true
+criterion.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+thiserror.workspace = true
+reth-provider.workspace = true
+
+arraydeque = "0"
+num-bigfloat.workspace = true
+once_cell.workspace = true
+rayon = "1"
+# Using clap for our bookgen command-line tool
+clap.workspace = true
+hex = "0.4.3"
+
+[dev-dependencies]
+pade.workspace = true
+pade-macro.workspace = true
+testing-tools.workspace = true
+revm.workspace = true
+revm-bytecode.workspace = true
+revm-database.workspace = true
+revm-state.workspace = true
+revm-primitives.workspace = true
+
+validation.workspace = true
+divan.workspace = true
+tokio-stream.workspace = true
+
+[build-dependencies]
+convert_case.workspace = true
+itertools.workspace = true
+
+[features]
+default = []
+testnet-sepolia = ["angstrom-types/testnet-sepolia", "testing-tools/testnet-sepolia", "validation/testnet-sepolia"]

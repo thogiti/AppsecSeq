@@ -1,0 +1,12 @@
+# An example angstrom node config for sepolia
+
+# sepolia testnet address 
+angstrom_address="0x9051085355BA7e36177e0a1c4082cb88C270ba90"
+# sepolia testnet address
+periphery_address="0x73922Ee4f10a1D5A68700fF5c4Fbf6B0e5bbA674"
+# sepolia testnet address
+pool_manager_address="0xE03A1074c86CFeDd5C142C4F04F1a1536e203543"
+# the tokenized gas token of the given chain
+gas_token_address = "0xfff9976782d46cc05630d1f6ebab18b2324d6b14"
+# sepolia deploy block
+angstrom_deploy_block=8276506

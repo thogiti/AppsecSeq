@@ -1,0 +1,57 @@
+[profile.default]
+solc = "0.8.26"
+bytecode_hash = "none"
+viaIR = false
+optimizer_runs = 1_000_000
+verbosity = 3
+fs_permissions = [{ access = "read-write", path = ".forge-snapshots/" }]
+ast = true
+evm_version = "cancun"
+libs = ["lib"]
+
+ignored_error_codes = [
+  2394, # Transient storage warning
+  3860, # Initcode size too large
+  5574, # Contract size too large
+]
+
+
+remappings = [
+  "solady/src/=lib/solady/src/",
+  "v4-core/src/=lib/v4-periphery/lib/v4-core/src/",
+  "v4-periphery/src/=lib/v4-periphery/src/",
+  "forge-std/=lib/forge-std/src",
+  "solmate/=lib/solmate/",
+  "core/src/=src/",
+]
+
+[profile.default.fmt]
+line_length = 100
+
+
+[profile.default.invariant]
+fail_on_revert = true
+depth = 200
+runs = 256
+
+[profile.ci]
+show_progress = false
+
+[profile.ci.invariant]
+fail_on_revert = true
+depth = 50
+runs = 50
+
+[profile.light-fuzz.invariant]
+runs = 40
+depth = 100
+
+[profile.heavy-fuzz.invariant]
+runs = 200
+
+[profile.loaders]
+show_progress = false
+optimizer = true
+ast = true
+src = "../crates/uniswap-v4/src/uniswap/loaders"
+libs = ["lib"]

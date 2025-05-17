@@ -1,0 +1,53 @@
+[package]
+name = "angstrom-rpc"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+exclude.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[dependencies]
+angstrom-types.workspace = true
+angstrom-utils.workspace = true
+angstrom-network.workspace = true
+consensus.workspace = true
+order-pool.workspace = true
+validation.workspace = true
+tokio-stream.workspace = true
+
+reth-primitives.workspace = true
+reth-tasks.workspace = true
+reth-metrics = { workspace = true, features = ["common"] }
+
+strum = { workspace = true, features = ["derive"] }
+bincode = { workspace = true }
+
+# misc
+jsonrpsee = { workspace = true, features = ["server", "macros", "ws-client"] }
+serde_json.workspace = true
+serde.workspace = true
+alloy-primitives = { workspace = true, features = ["serde"] }
+alloy-sol-types.workspace = true
+async-trait.workspace = true
+thiserror.workspace = true
+metrics.workspace = true
+tracing.workspace = true
+futures.workspace = true
+
+tower-http = { version = "0", features = ["full"] }
+tower = { version = "0", features = ["full"] }
+hyper = "1"
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["full", "tracing"] }
+rand = "0"
+
+[features]
+default = ["client"]
+client = []
+testnet-sepolia = ["angstrom-types/testnet-sepolia"]

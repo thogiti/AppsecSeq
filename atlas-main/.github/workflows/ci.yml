@@ -1,0 +1,95 @@
+name: CI
+
+env:
+  FOUNDRY_PROFILE: "ci"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Check formatting
+        run: forge fmt --check
+
+      - name: "Add lint summary"
+        run: |
+          echo "## Lint result" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Install dependencies
+        run: forge install
+
+      - name: Compile contracts
+        run: forge build
+
+      - name: Check contract sizes
+        run: |
+          forge build && \
+          for file in out/*.sol/*.json; do
+              # Skip test files and script files
+              if [[ "$file" == *".t.sol"* || "$file" == *".s.sol"* ]]; then
+                  continue
+              fi
+              # Extract contract name from the file path
+              contract_name=$(basename $(dirname $file))
+              # Check if the source file for the contract exists anywhere within src/contracts/
+              if ! find src/contracts/ -type f -name "${contract_name}.sol" | grep -q .; then
+                  continue
+              fi
+              # Calculate the size of the deployed bytecode
+              size=$(cat "$file" | jq '.deployedBytecode.object' | wc -c | awk '{print int(($1-2)/2)}')
+              # Check if size exceeds the limit
+              if [ $size -gt 24576 ]; then
+                  echo "Contract in $file exceeds max size of 24576 bytes (Size: $size bytes)"
+                  exit 1
+              fi
+          done
+
+      - name: "Add build summary"
+        run: |
+          echo "## Build result" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
+
+  tests:
+    needs: ["build"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Install dependencies
+        run: forge install
+
+      - name: Compile contracts
+        run: forge build
+
+      - name: Run tests
+        run: forge test
+        env:
+          MAINNET_RPC_URL: ${{ secrets.MAINNET_RPC_URL }}
+          BASE_RPC_URL: ${{ secrets.BASE_RPC_URL }}
+      
+      - name: Add test summary
+        run: |
+          echo "## Tests result" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
